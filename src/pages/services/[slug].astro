@@ -39,24 +39,24 @@ function getImageUrl(media: StrapiMedia | null) {
     
     
       <!-- Hero Section -->
-    <section class="relative h-screen min-h-[600px] flex items-center overflow-hidden">
-      <div class="absolute inset-0 bg-black/40 z-10"></div>
+    <section class="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-center bg-cover bg-no-repeat">
+      <div class="absolute inset-0 bg-black/60 z-10"></div>
       <img 
         src={getImageUrl(heroImage)} 
         alt={title}
-        class="absolute inset-0 w-full h-full object-cover"
+        class="absolute inset-0 w-full h-full bg-fixed object-cover"
       />
-      <div class="relative z-20 text-white max-w-7xl mx-auto px-4 w-full">
-        <div class="max-w-2xl">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">{title}</h1>
-          <div class="flex gap-6 text-sm uppercase tracking-wide">
+      <div class="relative  z-20 text-white max-w-7xl mx-auto px-4 w-full">
+        <div class="max-w-6xl flex items-end justify-between">
+          <h1 class="text-4xl max-w-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">{title}</h1>
+          <div class="flex gap-12 text-sm  tracking-wide">
             <div>
               <div class="text-gray-300 mb-1">Client</div>
-              <div class="font-medium">{client}</div>
+              <div class="font-medium uppercase">{client}</div>
             </div>
             <div>
               <div class="text-gray-300 mb-1">Date</div>
-              <div class="font-medium">{location}</div>
+              <div class="font-medium uppercase">{location}</div>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ function getImageUrl(media: StrapiMedia | null) {
           <section class={`flex flex-col lg:flex-row items-center gap-12 mb-20 ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
             <!-- Text Content -->
             <div class="flex-1 space-y-6">
-              <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{section.sectionTitle}</h2>
+              <h2 class="text-3xl md:text-5xl font-bold text-gray-900">{section.sectionTitle}</h2>
               <p class="text-lg text-gray-600 leading-relaxed">{section.sectionDescription}</p>
             </div>
             
@@ -82,18 +82,18 @@ function getImageUrl(media: StrapiMedia | null) {
                     <img 
                       src={getImageUrl(section.images[0])}
                       alt={section.images[0].alternativeText || section.sectionTitle}
-                      class="w-full h-80 object-cover rounded-lg shadow-lg"
+                      class="w-full h-96 object-cover rounded-lg shadow-lg"
                       loading="lazy"
                     />
                   </div>
                 ) : (
                   <div class="grid grid-cols-2 gap-4">
                     {section.images.slice(0, 2).map((image) => (
-                      <div>
+                      <div class="group  rounded-lg overflow-hidden">
                         <img 
                           src={getImageUrl(image)}
                           alt={image.alternativeText || section.sectionTitle}
-                          class="w-full h-48 object-cover rounded-lg shadow-lg"
+                          class="w-96 h-96 object-cover shadow-lg transition-transform duration-300 group-hover:scale-105"
                           loading="lazy"
                         />
                       </div>
@@ -112,7 +112,7 @@ function getImageUrl(media: StrapiMedia | null) {
     <section class="bg-gray-50 py-16">
       <div class="max-w-4xl mx-auto px-4 text-center">
         <div class="bg-white p-8 rounded-lg ">
-          <svg class="w-12 h-12 mx-auto mb-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+          <svg class="w-12 h-12 mx-auto mb-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
           </svg>
           <blockquote class="text-xl italic text-gray-700 mb-6">
