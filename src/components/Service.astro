@@ -13,7 +13,7 @@ const serviceCategories = await fetchApi<ServiceCategory[]>({
 });
 ---
 
-<section class="py-10 px-4 w-full">
+<section id="services" class="py-10 px-4 w-full">
   <h2 class="text-center font-bold text-3xl md:text-4xl mb-8">{section.title}</h2>
 
   {serviceCategories.map((category) => (
