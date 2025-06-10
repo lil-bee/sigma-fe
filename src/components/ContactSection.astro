@@ -1,0 +1,79 @@
+---
+import type { Contact } from "../interfaces/contact";
+import fetchApi from "../lib/strapi";
+
+const contact = await fetchApi<Contact>({
+  endpoint: "contact",
+  wrappedByKey: "data",
+});
+---
+
+<section class="flex flex-col items-center justify-center gap-8 md:gap-14 py-8 md:py-[72px] w-full bg-white">
+  <div class="flex flex-col md:flex-row items-start gap-8 md:gap-[98px] w-full max-w-7xl px-6 md:px-0">
+    <!-- Left content -->
+    <div class="flex flex-col items-start gap-4 flex-1">
+      <h3 class="text-lg font-semibold text-black">Contact</h3>
+
+      <div class="flex flex-col gap-4 md:gap-6 w-full">
+        <h2 class="text-2xl md:text-4xl font-extrabold leading-tight text-black">
+          {contact.title}
+        </h2>
+        <p class="text-base md:text-lg text-black">
+          {contact.description}
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact details card -->
+    <div class="w-full md:w-[350px] bg-transparent py-2">
+      <div class="flex flex-col gap-6 p-0">
+        <!-- Email -->
+        <div class="flex items-start gap-4 w-full">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M22 6l-10 7L2 6"></path>
+          </svg>
+          <div class="flex flex-col flex-1">
+            <h6 class="text-base font-semibold text-black">Email</h6>
+            <a href={`mailto:${contact.email}`} class="text-sm underline text-black">{contact.email}</a>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="flex items-start gap-4 w-full">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.86 19.86 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 13 13 0 005.11 5.11 2 2 0 011.72 2z"></path>
+          </svg>
+          <div class="flex flex-col flex-1">
+            <h6 class="text-base font-semibold text-black">Phone</h6>
+            <a href={`tel:${contact.phone}`} class="text-sm underline text-black">{contact.phone}</a>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="flex items-start gap-4 w-full">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1118 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <div class="flex flex-col flex-1">
+            <h6 class="text-base font-semibold text-black">Office</h6>
+            <p class="text-sm text-black">{contact.address}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Maps Embed -->
+  <div class="w-full max-w-7xl h-[300px] md:h-[500px] px-6 md:px-0 mt-8">
+    <iframe
+      src={contact.google_maps_embed_url}
+      title="Office Location Map"
+      class="w-full h-full border-0 rounded-md"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</section>

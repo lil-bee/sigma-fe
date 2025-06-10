@@ -1,0 +1,46 @@
+---
+import type { Hero } from "../interfaces/hero";
+import fetchApi from "../lib/strapi";
+
+const hero = await fetchApi<Hero>({
+  endpoint: "hero?populate=background_image",
+  wrappedByKey: "data",
+});
+
+const imageUrl = `${import.meta.env.STRAPI_URL}${hero.background_image?.url}`;
+console.log('imageurl', imageUrl)
+---
+
+<section class="w-full">
+  <div class="p-4">
+    <div
+      class="relative w-full h-[300px] md:h-[400px] lg:h-[480px] rounded-xl overflow-hidden"
+      style={`background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 50%), url(${imageUrl}) center / cover no-repeat;`}
+    >
+      <div class="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-8">
+        <div class="max-w-[896px] flex flex-col items-center gap-2">
+          <h2 class="font-extrabold text-white text-2xl md:text-3xl lg:text-[38px] text-center tracking-[-1px] md:tracking-[-2px] leading-tight md:leading-[60px]">
+            {hero.title}
+          </h2>
+
+          <p class="max-w-[662px] font-semibold text-white text-base md:text-xl text-center leading-6">
+            {hero.subtitle}
+          </p>
+
+          <div class="mt-6 md:mt-8">
+            <a 
+              href={hero.cta_url}
+            >
+            <button
+              class="inline-block h-10 md:h-12 px-4 md:px-5 bg-[#e53838] text-white font-bold rounded-xl hover:bg-[#c93232] transition-colors"
+            >
+              {hero.cta_text}
+            </button>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

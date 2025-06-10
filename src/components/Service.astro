@@ -1,0 +1,57 @@
+---
+import type { ServiceCategory, ServiceSection } from "../interfaces/service";
+import fetchApi from "../lib/strapi";
+
+const section = await fetchApi<ServiceSection>({
+  endpoint: "service-section",
+  wrappedByKey: "data"
+});
+
+const serviceCategories = await fetchApi<ServiceCategory[]>({
+  endpoint: "services?populate[services][populate]=image",
+  wrappedByKey: "data"
+});
+---
+
+<section class="py-10 px-4 w-full">
+  <h2 class="text-center font-bold text-3xl md:text-4xl mb-8">{section.title}</h2>
+
+  {serviceCategories.map((category) => (
+    <div class="mb-12">
+      <h3 class="text-2xl font-semibold mb-4">{category.category_title}</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {category.services.map((service) => (
+          <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+            <div class={`h-[169px] relative rounded-xl overflow-hidden ${service.bgColor ?? 'bg-gray-200'}`}>
+              {service.hasComplexImage ? (
+                <div class="relative w-[239px] h-[158px] top-3.5">
+                  <img
+                    class="absolute w-[174px] h-[142px] top-0 left-[65px] object-cover"
+                    src="/-e020cf05-ac69-4104-bc70-3a5d5d98f176-1.png"
+                    alt="complex"
+                  />
+                  <img
+                    class="absolute w-[125px] h-[54px] top-[104px] left-0"
+                    src="/vector-1.svg"
+                    alt="vector"
+                  />
+                </div>
+              ) : (
+                service.image && (
+                  <img
+                    class="absolute object-cover w-full h-full"
+                    src={import.meta.env.STRAPI_URL + service.image.url}
+                    alt={service.image.alternativeText ?? "Service image"}
+                  />
+                )
+              )}
+            </div>
+            <h4 class="mt-3 font-medium text-lg">{service.title}</h4>
+            <p class="text-sm text-gray-600 whitespace-pre-line">{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>

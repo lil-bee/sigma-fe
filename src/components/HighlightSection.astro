@@ -1,0 +1,61 @@
+---
+import { ChevronRightIcon } from "@lucide/astro";
+import type { Highlight } from "../interfaces/highlight";
+import fetchApi from "../lib/strapi";
+
+// Ambil data highlight dari Strapi
+const highlights = await fetchApi<Highlight[]>({
+  endpoint: "highlights?populate[heroImage]=true",
+  wrappedByKey: "data",
+});
+---
+
+<section class="py-[60px]  bg-white flex flex-col items-center gap-20">
+  <div class="flex flex-col items-center gap-4 max-w-[768px]">
+    <div class="flex flex-col items-center gap-6 w-full">
+      <h2 class="text-black text-5xl text-center leading-[57.6px] font-bold font-['Plus_Jakarta_Sans']">
+        Our Service Highlights
+      </h2>
+      <p class="text-black text-lg text-center leading-[27px] font-normal font-['Plus_Jakarta_Sans']">
+        See how we've helped businesses streamline logistics and scale efficiently.
+      </p>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center gap-16 w-full max-w-[960px]">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+      {highlights.map((project) => (
+        <div class="border-none shadow-none bg-white rounded-lg overflow-hidden">
+          <img
+            class="w-full h-[234px] object-cover"
+            src={import.meta.env.STRAPI_URL + project.heroImage.url}
+            alt={project.heroImage.alternativeText || "Highlight image"}
+          />
+          <div class="flex flex-col items-start gap-2 p-4">
+            <h3 class="font-bold text-black text-2xl leading-[33.6px] whitespace-pre-line font-['Plus_Jakarta_Sans']">
+              {project.title}
+            </h3>
+            <a href={`/services/${project.slug}`} class="flex items-center gap-2 pt-4 hover:text-blue-600 transition-colors">
+                <span class="text-base text-black leading-6 font-normal">
+                    View project
+                </span>
+                <ChevronRightIcon class="w-6 h-6" />
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <a
+      href="/projects"
+      class="inline-flex items-center bg-[#e53838] hover:bg-[#e53838]/90 text-white rounded-xl px-6 py-3 transition-all"
+    >
+      <span class="font-semibold text-base font-['Plus_Jakarta_Sans']">View All</span>
+      <img
+        class="w-[7.12px] h-[11.41px] ml-2"
+        alt="Arrow Icon"
+        src="/icon.svg"
+      />
+    </a>
+  </div>
+</section>

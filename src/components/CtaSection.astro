@@ -1,0 +1,44 @@
+---
+import type { CtaBanner } from "../interfaces/cta";
+import fetchApi from "../lib/strapi";
+
+const cta = await fetchApi<CtaBanner>({
+  endpoint: "cta-banner",
+  wrappedByKey: "data"
+});
+---
+
+<section class="w-full py-20 px-10">
+  <div class="flex flex-col items-center gap-8 max-w-4xl mx-auto">
+    <!-- Heading and Subheading -->
+    <div class="text-center space-y-2 w-full">
+      <h2 class="text-4xl font-extrabold tracking-tight leading-[45px] font-['Plus_Jakarta_Sans'] text-[#111416]">
+        {cta.title}
+      </h2>
+      <p class="text-base font-normal font-['Plus_Jakarta_Sans'] text-[#111416]">
+        {cta.subtitle}
+      </p>
+    </div>
+
+    <!-- Email form (static for now, could be connected to service) -->
+    <div class="w-full max-w-[560px]">
+      <div class="flex flex-col sm:flex-row w-full rounded-xl overflow-hidden">
+        <div class="flex-grow bg-[#eff2f4] rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            class="w-full h-12 px-4 border-0 bg-transparent font-['Plus_Jakarta_Sans'] text-[#637587] placeholder:text-[#637587] focus:outline-none"
+          />
+        </div>
+        <div class="bg-[#eff2f4] rounded-b-xl sm:rounded-r-xl sm:rounded-bl-none sm:p-2 flex items-center">
+          <a
+            href={cta.btn_url}
+            class="w-full sm:w-auto h-12 px-5 bg-[#e53838] hover:bg-[#e53838]/90 rounded-xl font-bold text-base text-white flex items-center justify-center font-['Plus_Jakarta_Sans']"
+          >
+            {cta.btn_text}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

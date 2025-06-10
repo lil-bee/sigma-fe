@@ -1,0 +1,42 @@
+---
+import type { MissionSection } from "../interfaces/mission";
+import fetchApi from "../lib/strapi";
+import { parseBoldSegments } from "../utils/parseRichtext"; // helper <strong>
+
+const mission = await fetchApi<MissionSection>({
+  endpoint: "mission?populate[missions][populate]=*",
+  wrappedByKey: "data"
+});
+---
+
+<section class="flex flex-col items-start gap-6 py-0 pb-[72px] w-full bg-white">
+  <h2 class="text-3xl md:text-4xl font-bold font-['Plus_Jakarta_Sans'] mb-6 text-black">
+    {mission.title}
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+    {mission.missions.map((item, idx) => {
+      const segments = parseBoldSegments(item.description);
+      return (
+        <div class="flex items-start gap-4" >
+          <div class="w-6 h-6 mt-1 shrink-0 text-red-500">
+            <!-- icon bisa diganti sesuai value -->
+            {item.icon === "star" ? (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 20.202 4.665 24 6 15.596 0 9.748l8.332-1.593z"/></svg>
+            ) : (
+              <span class="text-base font-bold">{item.icon}</span> // fallback jika icon tidak dikenal
+            )}
+          </div>
+
+          <p class="text-black text-lg md:text-2xl leading-[32px] font-['Plus_Jakarta_Sans']">
+            {segments.map((seg, i) => (
+              <span class={seg.bold ? "font-bold" : "font-medium"}>
+                {seg.text}
+              </span>
+            ))}
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</section>

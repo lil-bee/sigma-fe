@@ -1,0 +1,66 @@
+
+---
+// No props needed for this component
+---
+
+<script>
+  // Mobile menu toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // Close menu when clicking on menu items
+      const menuLinks = mobileMenu.querySelectorAll('a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+    }
+  });
+</script>
+
+<header class="flex items-center justify-between px-4 border-b border-[#e5e8ea] md:px-10 py-3 w-full h-16 relative">
+    <div class="w-full">
+    <div class="flex items-center justify-between">
+    <img
+      class="w-[37px] h-[31px]"
+      alt="Sigma logo"
+      src="/Sigma Logo.png"
+    />
+    <nav class="flex p-4">
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Home</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Services</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Projects</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Industries</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">About</a>
+    </nav>
+    </div>
+    </div>
+  
+
+  <!-- Mobile Menu Button -->
+  <button
+    id="mobile-menu-button"
+    class="md:hidden inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4"
+  >
+    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="absolute top-full left-0 right-0 bg-white border-b border-[#e5e8ea] md:hidden hidden">
+    <nav class="flex flex-col p-4">
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Home</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Services</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Projects</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">Industries</a>
+      <a href="#" class="py-2 px-4 text-[#111416] text-sm font-medium hover:bg-gray-100 rounded">About</a>
+    </nav>
+  </div>
