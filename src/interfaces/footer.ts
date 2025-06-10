@@ -7,7 +7,7 @@ export interface Footer {
   email: string;
   phone: string;
   social_links: {
-    name: string;
+    platform: string;
     url: string;
     icon?: string; // opsional jika icon pakai string name (misal "facebook")
   }[];

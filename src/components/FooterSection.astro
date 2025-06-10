@@ -1,4 +1,5 @@
 ---
+import { FacebookIcon, YoutubeIcon, type StarIcon } from "@lucide/astro";
 import type { Footer } from "../interfaces/footer";
 import fetchApi from "../lib/strapi";
 
@@ -7,6 +8,12 @@ const footer = await fetchApi<Footer>({
     "footer?populate[logo]=true&populate[social_links]=true&populate[footer_menu]=true",
   wrappedByKey: "data",
 });
+
+// Map nama icon ke komponen lucide
+const iconMap: Record<string, typeof StarIcon> = {
+  Youtube: YoutubeIcon,
+  Facebook: FacebookIcon,
+};
 ---
 <footer class="flex flex-col items-center gap-10 md:gap-20 px-4 md:px-0 py-10 md:py-20 w-full bg-white">
   <div class="flex flex-col md:flex-row items-start gap-8 md:gap-16 w-full">
@@ -35,16 +42,24 @@ const footer = await fetchApi<Footer>({
         </div>
 
         <div class="flex items-center gap-3">
-          {footer.social_links.map((social, idx) => (
-            <a
+          {footer.social_links.map((social, idx) => {
+             const IconComponent = iconMap[social.platform?.toLowerCase() ?? ""];
+            return (
+              <a
               href={social.url}
-              aria-label={social.name}
+              aria-label={social.platform}
               class="hover:opacity-80 transition-opacity"
             >
-              <!-- Replace with icon component or image if available -->
-              <span class="w-5 h-5 block bg-gray-400 rounded-full"></span>
+               {IconComponent ? (
+              <IconComponent class="w-6 h-6" />
+            ) : (
+              <span class="text-xs font-bold">{social.platform ?? "?"}</span> // fallback jika icon tidak ada
+            )}
             </a>
-          ))}
+            )
+          }
+            
+          )}
         </div>
       </div>
     </div>
@@ -69,7 +84,7 @@ const footer = await fetchApi<Footer>({
     <div class="h-px bg-[#030303] w-full"></div>
     <div class="flex flex-col md:flex-row items-center justify-between w-full gap-4">
       <div class="text-sm text-[#030303] text-center md:text-left">
-        © 2024 Relume. All rights reserved.
+        © 2025 Sigma. All rights reserved.
       </div>
       <div class="flex flex-wrap justify-center md:justify-start items-center gap-4">
         <a href="#" class="text-sm underline text-[#030303]">Privacy Policy</a>
