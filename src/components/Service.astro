@@ -48,11 +48,13 @@ function getGridColsClass(length: number) {
                   </div>
                 ) : (
                   service.image && (
-                    <img
-                      class="absolute object-cover w-full h-full"
-                      src={import.meta.env.STRAPI_URL + service.image.url}
-                      alt={service.image.alternativeText ?? "Service image"}
-                    />
+                    <div class="group">
+                      <img 
+                        class="absolute object-cover transition-transform duration-300 group-hover:scale-105 w-full h-full" 
+                        src={import.meta.env.STRAPI_URL + service.image.url} 
+                        alt={service.image.alternativeText ?? "Service image"} 
+                      />
+                    </div>
                   )
                 )}
               </div>

@@ -21,6 +21,7 @@ const iconMap: Record<string, typeof StarIcon> = {
     <div class="flex flex-col w-full md:w-[479px] items-start gap-8">
       {footer.logo?.url && (
         <img
+        loading="lazy"
           src={import.meta.env.STRAPI_URL + footer.logo.url}
           alt={footer.logo.alternativeText || "Company Logo"}
           class="w-24 object-contain"
