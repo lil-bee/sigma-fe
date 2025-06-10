@@ -1,15 +1,25 @@
 ---
 import type { MissionSection } from "../interfaces/mission";
 import fetchApi from "../lib/strapi";
-import { parseBoldSegments } from "../utils/parseRichtext"; // helper <strong>
+import { parseBoldSegments } from "../utils/parseRichtext";
+
+import { AlertCircle, CheckCircle, Info, Star } from "@lucide/astro"; // contoh import beberapa icon
 
 const mission = await fetchApi<MissionSection>({
   endpoint: "mission?populate[missions][populate]=*",
   wrappedByKey: "data"
 });
+
+// Map nama icon ke komponen lucide
+const iconMap: Record<string, typeof Star> = {
+  star: Star,
+  check: CheckCircle,
+  alert: AlertCircle,
+  info: Info,
+};
 ---
 
-<section class="flex flex-col items-start gap-6 py-0 pb-[72px] w-full bg-white">
+<section class="flex flex-col items-center gap-6 py-0 pb-[72px] w-full bg-white">
   <h2 class="text-3xl md:text-4xl font-bold font-['Plus_Jakarta_Sans'] mb-6 text-black">
     {mission.title}
   </h2>
@@ -17,14 +27,15 @@ const mission = await fetchApi<MissionSection>({
   <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
     {mission.missions.map((item, idx) => {
       const segments = parseBoldSegments(item.description);
+      const IconComponent = iconMap[item.icon?.toLowerCase() ?? ""]; // dapatkan icon dari map
+
       return (
-        <div class="flex items-start gap-4" >
-          <div class="w-6 h-6 mt-1 shrink-0 text-red-500">
-            <!-- icon bisa diganti sesuai value -->
-            {item.icon === "star" ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 20.202 4.665 24 6 15.596 0 9.748l8.332-1.593z"/></svg>
+        <div class="flex items-start gap-4">
+          <div class="w-6 h-6 mt-1 shrink-0 ">
+            {IconComponent ? (
+              <IconComponent class="w-6 h-6" fill="#fb2c36" stroke-width={0} />
             ) : (
-              <span class="text-base font-bold">{item.icon}</span> // fallback jika icon tidak dikenal
+              <span class="text-base font-bold">{item.icon ?? "?"}</span> // fallback jika icon tidak ada
             )}
           </div>
 
