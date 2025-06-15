@@ -1,7 +1,7 @@
 ---
 import type { MissionSection } from "../interfaces/mission";
 import fetchApi from "../lib/strapi";
-import { parseBoldSegments } from "../utils/parseRichtext";
+import { parseSimpleMarkdown } from "../utils/parseRichtext";
 
 import { AlertCircle, CheckCircle, Info, Star } from "@lucide/astro"; // contoh import beberapa icon
 
@@ -19,14 +19,13 @@ const iconMap: Record<string, typeof Star> = {
 };
 ---
 
-<section class="flex flex-col items-center gap-6 py-0 pb-[72px] w-full bg-white">
-  <h2 class="text-3xl md:text-4xl font-bold font-['Plus_Jakarta_Sans'] mb-6 text-black">
+<section class="flex flex-col items-center gap-4 pb-[72px] w-full">
+  <h2 class="text-3xl md:text-[40px] font-bold mb-4 text-black">
     {mission.title}
   </h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
     {mission.missions.map((item, idx) => {
-      const segments = parseBoldSegments(item.description);
       const IconComponent = iconMap[item.icon?.toLowerCase() ?? ""]; // dapatkan icon dari map
 
       return (
@@ -39,12 +38,7 @@ const iconMap: Record<string, typeof Star> = {
             )}
           </div>
 
-          <p class="font-light text-lg md:text-2xl leading-[32px] font-['Plus_Jakarta_Sans']">
-            {segments.map((seg, i) => (
-              <span class={seg.bold ? "font-bold" : "font-medium"}>
-                {seg.text}
-              </span>
-            ))}
+          <p set:html={parseSimpleMarkdown(item.description)} class=" text-lg md:text-2xl leading-[32px] font-['Plus_Jakarta_Sans']">           
           </p>
         </div>
       );
