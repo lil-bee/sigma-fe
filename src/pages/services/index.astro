@@ -1,0 +1,78 @@
+---
+export const prerender = false;
+
+import { ChevronRightIcon } from "@lucide/astro";
+import NavSection from "../../components/NavSection.astro";
+import type { HighlightResponse } from "../../interfaces/highlight";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import fetchApi from "../../lib/strapi";
+
+const currentPage = parseInt(Astro.url.searchParams.get("page") ?? "1");
+const pageSize = 9;
+
+const { data: highlights, meta } = await fetchApi<HighlightResponse>({
+  endpoint: `highlights?populate[heroImage]=true&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`,
+});
+---
+
+<BaseLayout title="Services">
+    <NavSection/>
+    <main >
+    <section class="max-w-[960px] mx-auto w-full py-20">
+      <h1 class="text-4xl font-bold mb-10 text-center">All Highlights</h1>
+
+      {highlights.length === 0 ? (
+        <p class="text-center text-gray-500">No highlights found.</p>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {highlights.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((project) => (
+        <a href={`/services/${project.slug}`} class="overflow-hidden rounded-lg group cursor-pointer">
+          <div class="relative overflow-hidden rounded-lg">
+            <img
+              class="w-full h-[234px] object-cover transition-transform duration-300 group-hover:scale-105"
+              src={import.meta.env.STRAPI_URL + project.heroImage.url}
+              alt={project.heroImage.alternativeText || "Highlight image"}
+            />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300"></div>
+          </div>
+          <div class="flex flex-col items-start gap-2 py-4">
+            <h3 class="font-bold text-black text-2xl leading-[33.6px] whitespace-pre-line font-['Plus_Jakarta_Sans']">
+              {project.title}
+            </h3>
+            <div  class="flex items-center gap-2 pt-4 group">
+              <span class="text-base text-black leading-6 font-normal">
+                View project
+              </span>
+              <ChevronRightIcon class="w-6 h-6 translate-x-0 transition-transform duration-200 group-hover:translate-x-1" />
+            </div>
+          </div>
+        </a>
+      ))}
+        </div>
+      )}
+      {meta && (
+        <div class="flex justify-center gap-4 mt-10">
+            {currentPage > 1 && (
+            <a
+                href={`/services?page=${currentPage - 1}`}
+                class="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300"
+            >
+                Prev
+            </a>
+            )}
+            {currentPage < meta.pagination.pageCount && (
+            <a
+                href={`/services?page=${currentPage + 1}`}
+                class="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300"
+            >
+                Next
+            </a>
+            )}
+        </div>
+        )}
+
+    </section>
+  </main>
+</BaseLayout>
+  
+

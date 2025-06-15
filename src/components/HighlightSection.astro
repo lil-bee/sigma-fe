@@ -3,11 +3,14 @@ import { ChevronRightIcon } from "@lucide/astro";
 import type { Highlight } from "../interfaces/highlight";
 import fetchApi from "../lib/strapi";
 
-// Ambil data highlight dari Strapi
-const highlights = await fetchApi<Highlight[]>({
+// Ambil highlight dan sort descending by createdAt, lalu ambil 3 teratas
+const highlights = (await fetchApi<Highlight[]>({
   endpoint: "highlights?populate[heroImage]=true",
   wrappedByKey: "data",
-});
+}))
+  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  .slice(0, 3); // Ambil hanya 3 terbaru
+
 ---
 
 <section id="projects" class="py-[60px]  bg-white flex flex-col items-center gap-20">
@@ -51,7 +54,7 @@ const highlights = await fetchApi<Highlight[]>({
 
 
     <a
-      href="/projects"
+      href="/services"
       class="inline-flex items-center bg-[#e53838] hover:bg-[#e53838]/90 text-white rounded-xl group px-6 py-3 transition-all"
     >
       <span class="font-semibold text-base font-['Plus_Jakarta_Sans']">View All</span>
