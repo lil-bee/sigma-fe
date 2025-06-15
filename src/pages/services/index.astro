@@ -2,6 +2,9 @@
 export const prerender = false;
 
 import { ChevronRightIcon } from "@lucide/astro";
+import ContactSection from '../../components/ContactSection.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import FooterSection from '../../components/FooterSection.astro';
 import NavSection from "../../components/NavSection.astro";
 import type { HighlightResponse } from "../../interfaces/highlight";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -71,7 +74,15 @@ const { data: highlights, meta } = await fetchApi<HighlightResponse>({
         </div>
         )}
 
+        
+
     </section>
+    <div class="w-full px-4 md:px-8 lg:px-40 py-5">
+          <div class="flex flex-col max-w-[960px] mx-auto w-full">
+			<CtaSection/>
+			<ContactSection/>
+			<FooterSection />
+            </div>
   </main>
 </BaseLayout>
   

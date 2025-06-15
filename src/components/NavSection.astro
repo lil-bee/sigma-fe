@@ -1,39 +1,43 @@
- <header class="bg-white border-b border-[#e5e8ea]">
-        <div class="max-w-screen-xl mx-auto px-4 md:px-10 py-4">
-            <!-- Hidden checkbox for toggle -->
-            <input id="menu-toggle" type="checkbox" class="hidden peer" />
-            
-            <!-- Flex container -->
-            <div class="flex items-center justify-between">
-                <!-- Logo -->
-                <a href="/" class="flex items-center space-x-2">
-                  <img src="/Sigma Logo.png" alt="Sigma logo" class="w-[37px] h-[31px]" />
-                </a>
-                
-                <!-- Hamburger toggle label -->
-                <label for="menu-toggle" class="md:hidden cursor-pointer z-10 relative">
-                    <svg class="h-6 w-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </label>
-                
-                <!-- Desktop Menu -->
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#home" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Home</a>
-                    <a href="#services" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Services</a>
-                    <a href="#projects" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Projects</a>
-                    <a href="#industries" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Industries</a>
-                    <a href="#about" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">About</a>
-                </nav>
-            </div>
-            
-            <!-- Mobile Menu: peer-checked target (now sibling of checkbox) -->
-            <nav class="hidden peer-checked:flex flex-col mt-4 space-y-2 md:hidden">
-                <a href="#home" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Home</a>
-                <a href="#services" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Services</a>
-                <a href="#projects" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Projects</a>
-                <a href="#industries" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Industries</a>
-                <a href="#about" class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">About</a>
-            </nav>
-        </div>
-    </header>
+---
+const isHome = Astro.url.pathname === "/";
+---
+
+<header class="bg-white border-b border-[#e5e8ea]">
+  <div class="max-w-screen-xl mx-auto px-4 md:px-10 py-4">
+    <!-- Hidden checkbox for toggle -->
+    <input id="menu-toggle" type="checkbox" class="hidden peer" />
+
+    <!-- Flex container -->
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center space-x-2">
+        <img src="/Sigma Logo.png" alt="Sigma logo" class="w-[37px] h-[31px]" />
+      </a>
+
+      <!-- Hamburger toggle label -->
+      <label for="menu-toggle" class="md:hidden cursor-pointer z-10 relative">
+        <svg class="h-6 w-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </label>
+
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex space-x-6">
+        <a href={isHome ? "#home" : "/#home"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Home</a>
+        <a href={isHome ? "#services" : "/#services"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Services</a>
+        <a href={isHome ? "#projects" : "/#projects"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Projects</a>
+        <a href={isHome ? "#industries" : "/#industries"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Industries</a>
+        <a href={isHome ? "#about" : "/#about"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">About</a>
+      </nav>
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav class="hidden peer-checked:flex flex-col mt-4 space-y-2 md:hidden">
+      <a href={isHome ? "#home" : "/#home"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Home</a>
+      <a href={isHome ? "#services" : "/#services"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Services</a>
+      <a href={isHome ? "#projects" : "/#projects"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Projects</a>
+      <a href={isHome ? "#industries" : "/#industries"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">Industries</a>
+      <a href={isHome ? "#about" : "/#about"} class="text-sm font-medium text-[#111416] hover:bg-gray-100 px-4 py-2 rounded">About</a>
+    </nav>
+  </div>
+</header>
