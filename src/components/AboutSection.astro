@@ -1,7 +1,7 @@
 ---
 import type { AboutUs } from "../interfaces/about";
 import fetchApi from "../lib/strapi";
-import { parseBoldSegments } from "../utils/parseRichtext"; // helper untuk parsing bold
+import { parseBoldSegments, parseSimpleMarkdown } from "../utils/parseRichtext"; // helper untuk parsing bold
 
 const about = await fetchApi<AboutUs>({
   endpoint: "about-us?populate=image",
@@ -17,12 +17,7 @@ const contentSegments = parseBoldSegments(about.content); // convert <strong> da
       {about.title}
     </h2>
 
-    <p class="text-[#121417] text-base md:text-lg leading-[27px] font-['Plus_Jakarta_Sans',Helvetica] tracking-normal">
-      {contentSegments.map((segment, index) => (
-        <span class={segment.bold ? "font-bold" : "font-normal"}>
-          {segment.text}
-        </span>
-      ))}
+    <p set:html={parseSimpleMarkdown(about.content)} class="text-[#121417] text-base md:text-lg leading-[27px] font-['Plus_Jakarta_Sans',Helvetica] tracking-normal">
     </p>
   </div>
 

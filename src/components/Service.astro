@@ -1,6 +1,7 @@
 ---
 import type { ServiceCategory, ServiceSection } from "../interfaces/service";
 import fetchApi from "../lib/strapi";
+import { parseSimpleMarkdown } from "../utils/parseRichtext";
 
 const section = await fetchApi<ServiceSection>({
   endpoint: "service-section",
@@ -59,7 +60,7 @@ function getGridColsClass(length: number) {
                 )}
               </div>
               <h4 class="mt-3 font-medium text-lg">{service.title}</h4>
-              <p class="text-sm text-gray-600 whitespace-pre-line">{service.description}</p>
+              <p set:html={parseSimpleMarkdown(service.description)} class="text-sm text-gray-600 leading-relaxed"></p>
             </div>
           ))}
         </div>
