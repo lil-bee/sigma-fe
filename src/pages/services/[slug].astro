@@ -1,4 +1,5 @@
 ---
+import BaseHead from '../../components/BaseHead.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import FooterSection from '../../components/FooterSection.astro';
@@ -42,7 +43,8 @@ function getImageUrl(media: StrapiMedia | null) {
 }
 ---
 
-<BaseLayout title={title}>
+<BaseLayout>
+    <BaseHead slot="head" title={title} description={title} />
     <NavSection/>
   <main>
     
