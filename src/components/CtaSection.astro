@@ -21,24 +21,14 @@ const cta = await fetchApi<CtaBanner>({
     </div>
 
     <!-- Email form (static for now, could be connected to service) -->
-    <div class="w-full max-w-[560px]">
-      <div class="flex sm:flex-row bg-[#eff2f4] w-full items-center rounded-xl overflow-hidden">
-        <div class="flex-grow ">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            class="w-full items-center h-12 px-4 border-0 bg-transparent font-['Plus_Jakarta_Sans'] text-[#637587] placeholder:text-[#637587] focus:outline-none"
-          />
-        </div>
-        <div class="sm:p-2 ">
-          <a
-            href={cta.btn_url}
-            class="w-full sm:w-auto h-12 px-5 bg-[#e53838] hover:bg-[#e53838]/90 rounded-xl font-bold text-base text-white flex items-center justify-center font-['Plus_Jakarta_Sans']"
+    <div class="w-full flex items-center justify-center max-w-[560px]">
+       <a href={cta.btn_url} target="_blank" rel="noopener noreferrer">
+          <button
+            class="inline-block cursor-pointer h-10 md:h-12 items-center  px-4 md:px-5 bg-[#e53838] text-white font-bold rounded-xl hover:bg-[#c93232] transition-colors"
           >
             {cta.btn_text}
-          </a>
-        </div>
-      </div>
+          </button>
+        </a>
     </div>
   </div>
 </section>
