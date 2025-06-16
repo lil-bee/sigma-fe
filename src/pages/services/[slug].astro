@@ -22,8 +22,17 @@ export async function getStaticPaths() {
 }
 
 const { highlight } = Astro.props;
-const { title, client, location, heroImage, Content } = highlight;
+const { title, client, date, heroImage, Content } = highlight;
 const strapiUrl = import.meta.env.STRAPI_URL;
+
+const newDate = new Date(date);
+
+const formatted = new Intl.DateTimeFormat("id-ID", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+}).format(newDate);
 
 function getImageUrl(media: StrapiMedia | null) {
   if (!media?.url) return '';
@@ -56,7 +65,7 @@ function getImageUrl(media: StrapiMedia | null) {
             </div>
             <div>
               <div class="text-gray-300 mb-1">Date</div>
-              <div class="font-medium uppercase">{location}</div>
+              <div class="font-medium">{formatted}</div>
             </div>
           </div>
         </div>

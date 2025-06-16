@@ -55,6 +55,7 @@ export interface Highlight {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  date: string;
   locale: string;
   heroImage: StrapiMedia;
   Content?: ContentSection[];
