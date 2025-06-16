@@ -1,16 +1,21 @@
-import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import rss from "@astrojs/rss";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import fetchApi from "../lib/strapi"; // asumsi kamu sudah punya ini
 
 export async function GET(context) {
-	const posts = await getCollection('blog');
-	return rss({
-		title: SITE_TITLE,
-		description: SITE_DESCRIPTION,
-		site: context.site,
-		items: posts.map((post) => ({
-			...post.data,
-			link: `/blog/${post.id}/`,
-		})),
-	});
+  const services = await fetchApi({
+    endpoint: "highlights?sort=date:desc&populate=*",
+  });
+
+  return rss({
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    site: context.site,
+    items: services.map((service) => ({
+      title: service.title,
+      pubDate: new Date(service.date),
+      description: service.description || "",
+      link: `/services/${service.slug}/`,
+    })),
+  });
 }
