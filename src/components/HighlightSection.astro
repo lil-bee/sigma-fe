@@ -34,6 +34,7 @@ const highlights = (await fetchApi<Highlight[]>({
               class="w-full h-[234px] object-cover transition-transform duration-300 group-hover:scale-105"
               src={import.meta.env.STRAPI_URL + project.heroImage.url}
               alt={project.heroImage.alternativeText || "Highlight image"}
+              loading="lazy"
             />
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300"></div>
           </div>

@@ -4,5 +4,7 @@ export interface AboutUs {
   image?: {
     url: string;
     alternativeText?: string;
+    documentId: string;
+    name: string;
   };
 }

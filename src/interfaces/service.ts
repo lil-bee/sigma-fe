@@ -8,6 +8,8 @@ export interface ServiceItem {
   image?: {
     url: string;
     alternativeText?: string;
+    documentId: string;
+    name: string;
   };
   bgColor?: string;
   hasComplexImage?: boolean;

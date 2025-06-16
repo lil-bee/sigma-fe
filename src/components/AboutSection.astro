@@ -26,7 +26,7 @@ const contentSegments = parseBoldSegments(about.content); // convert <strong> da
       <img
         class="w-full h-[250px] md:h-[378px] object-cover  transition-transform duration-400 group-hover:scale-115"
         src={import.meta.env.STRAPI_URL + about.image.url}
-        alt={about.image.alternativeText ?? "About us image"}
+        alt={about.image.name ?? "About us"}
       />
     ) : (
       <img

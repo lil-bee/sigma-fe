@@ -1,5 +1,8 @@
 ---
 import { MailIcon, MapPinIcon, PhoneIcon } from "@lucide/astro";
+import {
+Image
+} from 'astro:assets';
 import type { Contact } from "../interfaces/contact";
 import fetchApi from "../lib/strapi";
 
@@ -7,6 +10,8 @@ const contact = await fetchApi<Contact>({
   endpoint: "contact",
   wrappedByKey: "data",
 });
+
+import mapImage from "../assets/maps.png"; // file disimpan di /src/assets/
 
 // Buat Google Maps URL dari alamat
 const encodedAddress = encodeURIComponent(contact.address);
@@ -71,8 +76,8 @@ const mapsUrl =  `https://www.google.com/maps?q=${encodedAddress}`
       class="block relative w-full h-full rounded-md overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       <!-- Screenshot gambar maps -->
-      <img 
-        src="/maps.png"
+      <Image 
+        src={mapImage}
         alt="Office Location Map"
         class="w-full h-full object-cover transition-all duration-300 group-hover:blur-sm group-hover:scale-105"
       />
