@@ -19,10 +19,11 @@ export async function GET(context) {
     description: global.siteDescription,
     site: context.site,
     items: highlights.map((item) => ({
-      title: item.attributes.title,
-      pubDate: new Date(item.attributes.date),
-      description: item.attributes.description || "",
-      link: `/services/${item.attributes.slug}/`,
+      title: item.title,
+      pubDate: new Date(item.date),
+      description: item.title || "",
+      link: `/services/${item.slug}/`,
     })),
   });
 }
+
