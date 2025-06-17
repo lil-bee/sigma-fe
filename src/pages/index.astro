@@ -11,12 +11,24 @@ import NavSection from '../components/NavSection.astro';
 import PartnersSection from '../components/PartnersSection.astro';
 import Service from '../components/Service.astro';
 import VisionSection from '../components/VisionSection.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import fetchApi from '../lib/strapi';
+
+const global = await fetchApi<{
+  siteName: string;
+  siteDescription: string;
+  favicon: { url: string };
+}>({
+  endpoint: "global",
+  query: { populate: "favicon" },
+  wrappedByKey: "data",
+});
+
+const faviconUrl = new URL(global.favicon.url, import.meta.env.STRAPI_URL).href;
 ---
 
-<BaseLayout>
-  <BaseHead slot="head" title={SITE_TITLE} description={SITE_DESCRIPTION} />
+<BaseLayout favicon={faviconUrl}>
+  <BaseHead slot="head" title={global.siteName} description={global.siteDescription} />
   <div class="flex flex-col w-full bg-white">
     <NavSection/>
     <div class="w-full px-4 md:px-8 lg:px-40 py-5">

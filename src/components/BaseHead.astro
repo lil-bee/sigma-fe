@@ -1,6 +1,4 @@
 ---
-import { SITE_TITLE } from '../consts';
-
 export interface Props {
   title: string;
   description: string;
@@ -17,7 +15,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL('rss.xml', Astro.site)} />
+<link rel="alternate" type="application/rss+xml" title={title} href={new URL('rss.xml', Astro.site)} />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
