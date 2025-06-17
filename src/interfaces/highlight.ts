@@ -45,6 +45,14 @@ export interface ContentSection {
   images: StrapiMedia[];
 }
 
+export interface Testimonial {
+  id: number;
+  testi: string;
+  nama: string;
+  jabatan: string;
+  perusahaan: string;
+}
+
 export interface Highlight {
   id: number;
   documentId: string;
@@ -59,6 +67,7 @@ export interface Highlight {
   locale: string;
   heroImage: StrapiMedia;
   Content?: ContentSection[];
+  Testimoni?: Testimonial;
 }
 
 export interface StrapiPaginationMeta {
