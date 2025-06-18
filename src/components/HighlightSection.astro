@@ -16,10 +16,10 @@ const highlights = (await fetchApi<Highlight[]>({
 <section id="projects" class="py-[60px]  bg-white flex flex-col items-center gap-20">
   <div class="flex flex-col items-center gap-4 max-w-[768px]">
     <div class="flex flex-col items-center gap-6 w-full">
-      <h2 class="text-black text-5xl text-center leading-[57.6px] font-bold font-['Plus_Jakarta_Sans']">
+      <h2 class="text-black text-3xl md:text-5xl text-center leading-[57.6px] font-bold ">
         Our Service Highlights
       </h2>
-      <p class="text-black text-lg text-center leading-[27px] font-normal font-['Plus_Jakarta_Sans']">
+      <p class="text-black text-lg text-center leading-[27px] font-normal ">
         See how we've helped businesses streamline logistics and scale efficiently.
       </p>
     </div>
@@ -39,7 +39,7 @@ const highlights = (await fetchApi<Highlight[]>({
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300"></div>
           </div>
           <div class="flex flex-col items-start gap-2 py-4">
-            <h3 class="font-bold text-black text-2xl leading-[33.6px] whitespace-pre-line font-['Plus_Jakarta_Sans']">
+            <h3 class="font-bold text-black text-2xl leading-[33.6px] whitespace-pre-line ">
               {project.title}
             </h3>
             <div  class="flex items-center gap-2 pt-4 group">
@@ -58,7 +58,7 @@ const highlights = (await fetchApi<Highlight[]>({
       href="/services"
       class="inline-flex items-center bg-[#e53838] hover:bg-[#e53838]/90 text-white rounded-xl group px-6 py-3 transition-all"
     >
-      <span class="font-semibold text-base font-['Plus_Jakarta_Sans']">View All</span>
+      <span class="font-semibold text-base ">View All</span>
       <ChevronRightIcon class="w-6 h-6 translate-x-0 transition-transform duration-200 group-hover:translate-x-1" />
     </a>
   </div>

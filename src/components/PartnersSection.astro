@@ -22,7 +22,7 @@ else gridColsClass = "grid-cols-6 lg:grid-cols-8"; // fallback untuk banyak logo
     Trusted by renowned companies worldwide
   </h2>
 
-  <div class={`grid ${gridColsClass} gap-3 w-full justify-items-center items-center`}>
+  <div class={`grid ${gridColsClass} px-10 gap-3 w-full justify-items-center justify-center items-center`}>
     {partners.map((partner) => (
       <img
         src={import.meta.env.STRAPI_URL + partner.logos.url}

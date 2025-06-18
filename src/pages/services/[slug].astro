@@ -58,7 +58,7 @@ function getImageUrl(media: StrapiMedia | null) {
         class="absolute inset-0 w-full h-full bg-fixed object-cover"
       />
       <div class="relative  z-20 text-white max-w-7xl mx-auto px-4 w-full">
-        <div class="max-w-6xl flex items-end justify-between">
+        <div class="max-w-6xl flex flex-col md:flex-row items-start md:items-end justify-between">
           <h1 class="text-4xl max-w-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">{title}</h1>
           <div class="flex gap-12 text-sm  tracking-wide">
             <div>
@@ -98,7 +98,7 @@ function getImageUrl(media: StrapiMedia | null) {
                     />
                   </div>
                 ) : (
-                  <div class="grid grid-cols-2 gap-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {section.images.slice(0, 2).map((image) => (
                       <div class="group  rounded-lg overflow-hidden">
                         <img 
