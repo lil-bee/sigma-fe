@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import logo from "../assets/sigma logo.webp"; // file disimpan di /src/assets/
+
 const isHome = Astro.url.pathname === "/";
 ---
 
@@ -11,7 +14,7 @@ const isHome = Astro.url.pathname === "/";
     <div class="flex items-center justify-between">
       <!-- Logo -->
       <a href="/" class="flex items-center space-x-2">
-        <img src="/Sigma Logo.png" alt="Sigma logo" class="w-[37px] h-[31px]" />
+        <Image src={logo} alt="Sigma logo" class="w-13" />
       </a>
 
       <!-- Hamburger toggle label -->
