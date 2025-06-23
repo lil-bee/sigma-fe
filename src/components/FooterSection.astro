@@ -1,5 +1,5 @@
 ---
-import { FacebookIcon, YoutubeIcon, type StarIcon } from "@lucide/astro";
+import { Icon } from 'astro-icon/components';
 import type { Footer } from "../interfaces/footer";
 import fetchApi from "../lib/strapi";
 
@@ -9,22 +9,53 @@ const footer = await fetchApi<Footer>({
   wrappedByKey: "data",
 });
 
-// Map nama icon ke komponen lucide
-const iconMap: Record<string, typeof StarIcon> = {
-  Youtube: YoutubeIcon,
-  Facebook: FacebookIcon,
+// Map nama platform ke MDI icon names
+const iconMap: Record<string, string> = {
+  facebook: "mdi:facebook",
+  youtube: "mdi:youtube", 
+  instagram: "mdi:instagram",
+  twitter: "mdi:twitter",
+  linkedin: "mdi:linkedin",
+  whatsapp: "mdi:whatsapp",
+  telegram: "mdi:telegram",
+  tiktok: "mdi:tiktok",
+  discord: "mdi:discord",
+  pinterest: "mdi:pinterest",
+  snapchat: "mdi:snapchat",
+  reddit: "mdi:reddit",
+  // Tambah platform lain sesuai kebutuhan
+};
+
+// Function untuk dapetin icon name dari platform
+const getIconName = (platform: string): string => {
+  const normalizedPlatform = platform.toLowerCase().trim();
+  return iconMap[normalizedPlatform] || "mdi:web"; // fallback ke web icon
+};
+
+// Color mapping untuk berbagai platform
+const colorClasses: Record<string, string> = {
+  facebook: "text-blue-600 hover:text-blue-700",
+  youtube: "text-red-600 hover:text-red-700", 
+  instagram: "text-pink-600 hover:text-pink-700",
+  twitter: "text-blue-400 hover:text-blue-500",
+  linkedin: "text-blue-700 hover:text-blue-800",
+  whatsapp: "text-green-600 hover:text-green-700",
+  telegram: "text-blue-500 hover:text-blue-600",
+  tiktok: "text-black hover:text-gray-800",
+  discord: "text-indigo-600 hover:text-indigo-700",
+  pinterest: "text-red-500 hover:text-red-600",
 };
 
 const isHome = Astro.url.pathname === "/";
-
 ---
+
 <footer class="flex flex-col items-center gap-10 md:gap-20 px-4 md:px-0 py-10 md:py-20 w-full bg-white">
   <div class="flex flex-col md:flex-row items-start gap-8 md:gap-16 w-full">
     <!-- Left section: Logo and contact -->
     <div class="flex flex-col w-full md:w-[479px] items-start gap-8">
       {footer.logo?.url && (
         <img
-        loading="lazy"
+          loading="lazy"
           src={import.meta.env.STRAPI_URL + footer.logo.url}
           alt={footer.logo.alternativeText || "Company Logo"}
           class="w-24 object-contain"
@@ -40,30 +71,33 @@ const isHome = Astro.url.pathname === "/";
         <div class="flex flex-col gap-1">
           <div class="font-semibold text-sm text-[#030303]">Contact:</div>
           <div class="flex flex-col gap-1">
-            <a href={`tel:${footer.phone}`} class="text-sm underline text-black">{footer.phone}</a>
+            <a href={`https://wa.me/${footer.phone}`} class="text-sm underline text-black">{footer.phone}</a>
             <a href={`mailto:${footer.email}`} class="text-sm underline text-[#030303]">{footer.email}</a>
           </div>
         </div>
 
+        <!-- Social Media Icons -->
         <div class="flex items-center gap-3">
-          {footer.social_links.map((social, idx) => {
-             const IconComponent = iconMap[social.platform?.toLowerCase() ?? ""];
+          {footer.social_links.map((social) => {
+            const iconName = getIconName(social.platform ?? "");
+            const platformLower = social.platform?.toLowerCase() ?? "";
+            const colorClass = colorClasses[platformLower] || "text-gray-600 hover:text-gray-700";
+            
             return (
               <a
-              href={social.url}
-              aria-label={social.platform}
-              class="hover:opacity-80 transition-opacity"
-            >
-               {IconComponent ? (
-              <IconComponent class="w-6 h-6" />
-            ) : (
-              <span class="text-xs font-bold">{social.platform ?? "?"}</span> // fallback jika icon tidak ada
-            )}
-            </a>
-            )
-          }
-            
-          )}
+                href={social.url}
+                aria-label={`Follow us on ${social.platform}`}
+                class={`${colorClass} hover:scale-110 transition-all duration-200`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon 
+                  name={iconName} 
+                  class="w-6 h-6" 
+                />
+              </a>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -71,8 +105,9 @@ const isHome = Astro.url.pathname === "/";
     <!-- Right section: Navigation -->
     <div class="flex w-full md:w-[406px] items-start gap-6">
       <nav class="flex flex-col items-start md:items-end gap-3 w-full">
-        {footer.footer_menu.map((item, idx) => (
+        {footer.footer_menu.map((item) => (
           <a
+          target="_blank"
             href={isHome ? item.url : `/${item.url}`}
             class="text-sm text-[#030303] hover:opacity-80 transition-opacity"
           >
@@ -91,9 +126,9 @@ const isHome = Astro.url.pathname === "/";
         © 2025 Sigma Distribusi. All rights reserved.
       </div>
       <div class="flex flex-wrap justify-center md:justify-start items-center gap-4">
-        <a href="#" class="text-sm underline text-[#030303]">Privacy Policy</a>
-        <a href="#" class="text-sm underline text-[#030303]">Terms and Conditions</a>
-        <a href="#" class="text-sm underline text-[#030303]">Cookies Policy</a>
+        <a href="#" class="text-sm underline text-[#030303] hover:opacity-80 transition-opacity">Privacy Policy</a>
+        <a href="#" class="text-sm underline text-[#030303] hover:opacity-80 transition-opacity">Terms and Conditions</a>
+        <a href="#" class="text-sm underline text-[#030303] hover:opacity-80 transition-opacity">Cookies Policy</a>
       </div>
     </div>
   </div>

@@ -6,10 +6,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 import node from "@astrojs/node";
 
+import icon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
 site: "https://sigma-distribusi.com",
-  integrations: [sitemap()],
+  integrations: [sitemap(), icon()],
 
   vite: {
     plugins: [tailwindcss()],

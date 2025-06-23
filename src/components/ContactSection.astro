@@ -1,8 +1,10 @@
 ---
-import { MailIcon, MapPinIcon, PhoneIcon } from "@lucide/astro";
+import { MailIcon, MapPinIcon } from "@lucide/astro";
+import { Icon } from 'astro-icon/components';
 import {
 Image
 } from 'astro:assets';
+
 import type { Contact } from "../interfaces/contact";
 import fetchApi from "../lib/strapi";
 
@@ -46,11 +48,11 @@ const mapsUrl =  `https://www.google.com/maps?q=${encodedAddress}`
 
         <!-- Phone -->
         <div class="flex items-start gap-4 w-full">
-         <PhoneIcon class="w-6 h-6 text-red-600"/>
+         <Icon name="mdi:whatsapp" class="w-6 h-6 text-red-600" />
           
           <div class="flex flex-col flex-1">
             <h6 class="text-base font-semibold text-black">Phone</h6>
-            <a href={`tel:${contact.phone}`} class="text-sm underline text-black">{contact.phone}</a>
+            <a target="_blank" href={`https://wa.me/${contact.phone}`} class="text-sm underline text-black">{contact.phone}</a>
           </div>
         </div>
 
