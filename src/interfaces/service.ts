@@ -1,5 +1,6 @@
 export interface ServiceSection {
   title: string;
+  description: string;
 }
 
 export interface ServiceItem {
